@@ -146,19 +146,19 @@ export default Component;
     }
     &.top {
       &.left {
-        border-radius: 100% 0 0 0;
+        border-radius: 200% 0 0 0;
       }
       &.right {
-        border-radius: 0 100% 0 0;
+        border-radius: 0 200% 0 0;
       }
     }
 
     &.bottom {
       &.left {
-        border-radius: 0 0 0 100%;
+        border-radius: 0 0 0 200%;
       }
       &.right {
-        border-radius: 0 0 100% 0;
+        border-radius: 0 0 200% 0;
       }
     }
   }

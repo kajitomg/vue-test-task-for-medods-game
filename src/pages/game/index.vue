@@ -73,13 +73,15 @@ export default defineComponent({
       this.level = ['blue'];
     },
     start() {
-      this.initState();
-      this.play(
-        this.callback,
-        this.level,
-        this.settings.difficulty.interval,
-        this.settings.timeout,
-      )();
+      if (!this.info.playbacked) {
+        this.initState();
+        this.play(
+          this.callback,
+          this.level,
+          this.settings.difficulty.interval,
+          this.settings.timeout,
+        )();
+      }
     },
     play(
       callback:(value:string) => void,
@@ -116,7 +118,9 @@ export default defineComponent({
       const value = iterated.next();
       callback(value.value);
       setTimeout(() => {
-        if (!value.done) this.call(iterated, callback, interval);
+        setTimeout(() => {
+          if (!value.done) this.call(iterated, callback, interval);
+        }, this.settings.timeout);
         if (value.done) this.info.playbacked = false;
       }, interval);
     },
@@ -172,7 +176,7 @@ export default defineComponent({
         :set-played="setPlayed"
     />
     <div class="stats">
-      <button @click="start">Играть</button>
+      <button @click="start" :disabled="info.playbacked">Играть</button>
       <div class="error" v-if="info.lose">{{error}}</div>
       <game-options
           :difficult="settings.difficulty"

@@ -75,7 +75,6 @@ const Component = defineComponent({
     compareSequences(sequence:string[]):boolean {
       const levelSequence = [...this.level]
         .splice(0, sequence.length);
-      console.log(sequence, this.level);
       return sequence.toString() === levelSequence.toString();
     },
   },
