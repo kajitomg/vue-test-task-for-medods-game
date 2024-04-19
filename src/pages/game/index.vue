@@ -68,6 +68,19 @@ export default defineComponent({
     },
   },
   methods: {
+    initState() {
+      this.stats.count = 0;
+      this.level = ['blue'];
+    },
+    start() {
+      this.initState();
+      this.play(
+        this.callback,
+        this.level,
+        this.settings.difficulty.interval,
+        this.settings.timeout,
+      )();
+    },
     play(
       callback:(value:string) => void,
       sequence:string[],
@@ -136,7 +149,7 @@ export default defineComponent({
     setPlayed(value: boolean) {
       this.info.played = value;
     },
-    getRandomPlate(itemsCount = 4) {
+    getRandomPlate(itemsCount = 3) {
       const random = this.getRandomNumber(1, itemsCount);
       return ['blue', 'red', 'yellow', 'green'][random];
     },
@@ -159,14 +172,7 @@ export default defineComponent({
         :set-played="setPlayed"
     />
     <div class="stats">
-      <button @click="() => {
-      play(
-        callback,
-        level,
-        settings.difficulty.interval,
-        settings.timeout,
-       )()
-    }">Играть</button>
+      <button @click="start">Играть</button>
       <div class="error" v-if="info.lose">{{error}}</div>
       <game-options
           :difficult="settings.difficulty"
